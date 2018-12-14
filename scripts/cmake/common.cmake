@@ -64,11 +64,13 @@ function(doctest_add_executable name)
     add_executable(${name} ${ARGN})
     add_dependencies(${name} assemble_single_header)
     target_link_libraries(${name} ${CMAKE_THREAD_LIBS_INIT})
+	set_property(TARGET ${name} PROPERTY FOLDER "3rdParty/doctest")
 endfunction()
 
 function(doctest_add_library name)
     add_library(${name} ${ARGN})
     add_dependencies(${name} assemble_single_header)
+	set_property(TARGET ${name} PROPERTY FOLDER "3rdParty/doctest")
 endfunction()
 
 macro(add_compiler_flags)
@@ -200,3 +202,4 @@ add_custom_command(
     COMMENT "assembling the single header")
 
 add_custom_target(assemble_single_header ALL DEPENDS ${doctest_include_folder}doctest.h)
+set_target_properties(assemble_single_header PROPERTIES FOLDER "3rdParty/doctest")

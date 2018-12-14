@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(all_features)
+#project(all_features)
+SET ( TARGET_NAME all_features )
+MESSAGE( STATUS "configuring ${TARGET_NAME}" )
 
 include(../../scripts/cmake/common.cmake)
 
@@ -31,16 +33,16 @@ set(files_all
 )
 
 # add the executable
-doctest_add_executable(${PROJECT_NAME} ${files_all})
+doctest_add_executable(${TARGET_NAME} ${files_all})
 
 # easy way to fix test coverage - disable colors and crash handling
-target_compile_definitions(${PROJECT_NAME} PRIVATE
+target_compile_definitions(${TARGET_NAME} PRIVATE
     DOCTEST_CONFIG_COLORS_NONE
     DOCTEST_CONFIG_NO_POSIX_SIGNALS
     DOCTEST_CONFIG_NO_WINDOWS_SEH)
 
 # omit the version and the num test cases skipped from the summary - this way the output will change less often
-set(common_args COMMAND $<TARGET_FILE:${PROJECT_NAME}> --no-skipped-summary --no-version --reporters=console)
+set(common_args COMMAND $<TARGET_FILE:${TARGET_NAME}> --no-skipped-summary --no-version --reporters=console)
 
 # add per-file tests
 foreach(f ${files_with_output})
@@ -57,7 +59,7 @@ endif()
 doctest_add_test(NAME coverage_maxout.cpp ${common_args} -sf=*coverage_maxout.cpp)
 
 # queries
-doctest_add_test(NAME version           COMMAND $<TARGET_FILE:${PROJECT_NAME}> -v)
+doctest_add_test(NAME version           COMMAND $<TARGET_FILE:${TARGET_NAME}> -v)
 doctest_add_test(NAME help              ${common_args} -h)
 doctest_add_test(NAME count             ${common_args} -c   -sf=*coverage*)
 doctest_add_test(NAME list_test_cases   ${common_args} -ltc -sf=*coverage*)
@@ -69,7 +71,7 @@ doctest_add_test(NAME all_binary  ${common_args} -tc=all?binary* -s) # print all
 doctest_add_test(NAME abort_after ${common_args} -aa=2 -e=off   -sf=*coverage*) # abort after 2 assert fails and parse a negative
 doctest_add_test(NAME first_last  ${common_args} -f=2 -l=4      -sf=*coverage*) # run a range
 doctest_add_test(NAME filter_1    ${common_args} -ts=none) # should filter out all
-doctest_add_test(NAME filter_2    COMMAND $<TARGET_FILE:${PROJECT_NAME}> -tse=* -nv) # should filter out all + print skipped
+doctest_add_test(NAME filter_2    COMMAND $<TARGET_FILE:${TARGET_NAME}> -tse=* -nv) # should filter out all + print skipped
 doctest_add_test(NAME filter_3    ${common_args} -sc=from*,sc* -sce=sc2 -sf=*subcases*) # enter a specific subcase - sc1
 doctest_add_test(NAME order_1     ${common_args} -ob=suite -ns          -sf=*test_cases_and_suites*)
 doctest_add_test(NAME order_2     ${common_args} -ob=name               -sf=*test_cases_and_suites*)
