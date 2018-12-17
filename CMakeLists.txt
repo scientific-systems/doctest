@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-if(NOT DEFINED TARGET_NAME)
+if(NOT DEFINED PROJECT_NAME)
   set(NOT_SUBPROJECT ON)
 endif()
 SET ( TARGET_NAME doctest )
@@ -10,7 +10,7 @@ MESSAGE( STATUS "configuring ${TARGET_NAME}" )
 
 file(READ ${CMAKE_CURRENT_SOURCE_DIR}/scripts/version.txt ver)
 if (NOT NOT_SUBPROJECT)
-	project(doctest VERSION ${ver})
+	project(${TARGET_NAME} VERSION ${ver})
 endif ()
 
 option(DOCTEST_WITH_TESTS               "Build tests/examples" ${NOT_SUBPROJECT})
