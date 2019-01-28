@@ -14,7 +14,7 @@ if (NOT NOT_SUBPROJECT)
 endif ()
 
 option(DOCTEST_WITH_TESTS               "Build tests/examples" ${NOT_SUBPROJECT})
-option(DOCTEST_WITH_MAIN_IN_STATIC_LIB  "Build a static lib (cmake target) with a main entry point" OFF)
+option(DOCTEST_WITH_MAIN_IN_STATIC_LIB  "Build a static lib (cmake target) with a main entry point" ON)
 option(DOCTEST_NO_INSTALL  "Skip the installation process" ON)
 
 add_library(${TARGET_NAME} INTERFACE)
